@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+open Graph
+
+(* Phase 1 *)
+
+(* Parsing du fichier *)
+let leBarC, jf, coul_list = Analyse.phase1 ()
+
+(* Construction du graphe *)
+let construct_graph clist =
+  let rec constr_aux g clist = match clist with
+    |[] -> g
+    |(s,d)::tl -> constr_aux (StrGraph.add_edge s d g) tl
+  in constr_aux StrGraph.empty clist
+
+
+let gr = construct_graph coul_list;;
+
+StrGraph.print_graph gr
+=======
 open Graph;;
 
 (* CLI args parsing *)
@@ -27,3 +47,4 @@ let root =
                                (List.nth 1 vertices) g) (acc-1)
            else g
     in parse_vertices StrGraph.empty edge_amount;;
+>>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573

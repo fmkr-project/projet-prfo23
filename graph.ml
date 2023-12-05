@@ -10,7 +10,13 @@ module type S = sig
   val is_empty: t -> bool
   val add_vx: vx -> t -> t
   val add_edge: vx -> vx -> t -> t
+<<<<<<< HEAD
+                                   (* Implémentation partielle : on n'a pas besoin de supprimer des arêtes *)
+  val print_succs: vx -> t -> unit
+  val print_graph: t -> unit
+=======
       (* Implémentation partielle : on n'a pas besoin de supprimer des arêtes *)
+>>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573
   
 end;;
 
@@ -44,6 +50,13 @@ module StrGraph = struct
     (* print_graph: t -> unit *)
     MapsTo.fold (fun elt _ () -> begin Printf.printf "%s: " elt;
                                        print_succs elt g;
+<<<<<<< HEAD
+                                       Printf.printf "\n" end)
+      g ()
+  
+  (* Fonctions de parcours *)
+=======
                                        Printf.printf "\n" end) g ()
+>>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573
   
 end;;
