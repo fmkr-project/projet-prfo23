@@ -11,17 +11,10 @@ module type S = sig
   val add_vx: vx -> t -> t
   val add_edge: vx -> vx -> t -> t
       (* Implémentation partielle : on n'a pas besoin de supprimer des arêtes *)
-<<<<<<< HEAD
   val print_succs: vx -> t -> unit
   val print_graph: t -> unit
 
-  val shortests: t -> string list list
+  val shortests: vx -> vx -> t -> string list list
 end;;
 
 module StrGraph: S with type vx = string
-=======
-  
-end;;
-
-module StrGraph: S
->>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573

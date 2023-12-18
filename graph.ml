@@ -10,13 +10,10 @@ module type S = sig
   val is_empty: t -> bool
   val add_vx: vx -> t -> t
   val add_edge: vx -> vx -> t -> t
-<<<<<<< HEAD
                                    (* Implémentation partielle : on n'a pas besoin de supprimer des arêtes *)
   val print_succs: vx -> t -> unit
   val print_graph: t -> unit
-=======
-      (* Implémentation partielle : on n'a pas besoin de supprimer des arêtes *)
->>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573
+  val shortests: vx -> vx -> t -> string list list
   
 end;;
 
@@ -50,13 +47,26 @@ module StrGraph = struct
     (* print_graph: t -> unit *)
     MapsTo.fold (fun elt _ () -> begin Printf.printf "%s: " elt;
                                        print_succs elt g;
-<<<<<<< HEAD
                                        Printf.printf "\n" end)
       g ()
   
   (* Fonctions de parcours *)
-=======
-                                       Printf.printf "\n" end) g ()
->>>>>>> c2baf921e8a4451c22419725097f1fc63a7ab573
+  let nexts from g = if MapsTo.mem from g then raise Not_found
+                     else MapsTo.find from g
+
+  (* Les paths sont stockés dans l'autre sens *)
+  let rec esc paths g = match paths with
+    |[] -> []
+    |hd::tl -> (List.map (fun tgt -> tgt::hd) (nexts (List.hd hd) g)) @ (esc tl g)
+
+  let ends paths = List.map List.hd paths
+  
+  (* TODO gérer le cas des graphes avec cycle *)
+  (* Chemin le + court = on s'arrête le plus tôt possible *)
+  let shortests src dst g =
+    let rec check_for_dst acc = if List.mem dst (ends acc)
+                                then List.filter (fun elt -> List.hd elt = dst) acc
+                                else check_for_dst (esc acc g)
+    in check_for_dst [[src]]
   
 end;;
