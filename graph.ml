@@ -14,7 +14,7 @@ module type S = sig
   val print_succs: vx -> t -> unit
   val print_graph: t -> unit
   val shortests: vx -> vx -> t -> string list list
-  
+  val print_paths: string list list -> unit
 end;;
 
 
@@ -49,15 +49,43 @@ module StrGraph = struct
                                        print_succs elt g;
                                        Printf.printf "\n" end)
       g ()
+
+
+  (* Fonctions d'affichage *)
+  (* Affichage d'un seul chemin a l'ecran *)
+  (* print_path : vx list -> unit *)
+  (* TODO : format correct *)
+  let print_path path =
+    let rec printable li = match li with
+      | [] -> ""
+      | hd::tl -> (printable tl) ^ hd ^ " "
+    in Printf.printf "%s\n" (printable path)
+
+  (* print_paths : vx list list -> unit *)
+  let rec print_paths paths = match paths with
+    | [] -> ()
+    | hd::tl -> begin print_path hd; print_paths tl end
+  
   
   (* Fonctions de parcours *)
-  let nexts from g = if MapsTo.mem from g then raise Not_found
-                     else MapsTo.find from g
+  (* nexts : vx -> t -> vx list *)
+  let nexts from g = if not (MapsTo.mem from g)
+                     then raise Not_found
+                     else NodeSet.elements (MapsTo.find from g)
 
   (* Les paths sont stockés dans l'autre sens *)
+  (* Pour chaque chemin de paths, ajouter ce chemin plus un successeur pour chaque successeur dans g possede par le dernier Node du chemin *)
+  (* esc : vx list list -> t -> vx list list *)
   let rec esc paths g = match paths with
-    |[] -> []
-    |hd::tl -> (List.map (fun tgt -> tgt::hd) (nexts (List.hd hd) g)) @ (esc tl g)
+    | [] -> []
+    | hd::tl ->
+       let hd_path_succs = try nexts (List.hd hd) g
+                           with Not_found -> []
+       in
+       let new_hd =
+         List.map (fun succ -> succ::hd) hd_path_succs
+       in new_hd @ (esc tl g)
+       
 
   let ends paths = List.map List.hd paths
   
@@ -68,5 +96,6 @@ module StrGraph = struct
                                 then List.filter (fun elt -> List.hd elt = dst) acc
                                 else check_for_dst (esc acc g)
     in check_for_dst [[src]]
-  
+
+
 end;;

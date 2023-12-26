@@ -15,4 +15,4 @@ let construct_graph clist =
 
 let gr = construct_graph coul_list;;
 
-StrGraph.print_graph gr
+StrGraph.print_paths (StrGraph.shortests leBarC jf gr);;

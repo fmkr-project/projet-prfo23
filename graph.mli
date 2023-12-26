@@ -15,6 +15,7 @@ module type S = sig
   val print_graph: t -> unit
 
   val shortests: vx -> vx -> t -> string list list
+  val print_paths: string list list -> unit
 end;;
 
 module StrGraph: S with type vx = string
