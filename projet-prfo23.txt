@@ -1,0 +1,193 @@
+Programmation fonctionnelle : projet 2023
+
+Dates et principe
+
+Cette page peut être mise à jour avec des informations
+complémentaires et des précisions. Pensez à y revenir
+souvent.
+-----------------------------------------------------------
+Projet à rendre pour le mercredi 10/01/2024 à 23h59, aucun
+retard ne sera toléré.
+Des soutenances pourront être organisées ensuite.
+
+Lire tout le sujet (tout ? tout).
+
+Un rendu de projet comprend : 
+
+* Un rapport précisant et justifiant vos choix (de
+ structures, etc.), les problèmes techniques qui se posent
+ et les solutions trouvées. Il donne en conclusion les
+ limites de votre programme. Le rapport sera de préférence
+ composé avec LaTeX. Le soin apporté à la grammaire et à
+ l'orthographe est largement pris en compte.
+* Un manuel d'utilisation, même minimal.
+* Un code abondamment commenté ; la première partie des
+ commentaires comportera systématiquement les lignes :
+
+1 @requires décrivant les pré-conditions : c'est-à-dire
+ conditions sur les paramètres pour une bonne utilisation
+ (pas de typage ici),
+2 @ensures décrivant la propriété vraie à la sortie de la
+ fonction lorsque les pré-conditions sont respectées, le
+ cas échéant avec mention des comportements en cas de
+ succès et en cas d'échec,
+3 @raises énumérant les exceptions éventuellement levées
+ (et précisant dans quel(s) cas elles le sont).
+
+On pourra préciser des informations additionnelles si des
+techniques particulières méritent d'être mentionnées.
+
+Le code doit enfin compiler sans erreur (évidemment) et
+sans warning sur les machines des salles de TP (ocaml
+version 4.13.1). 
+
+Avez-vous lu tout le sujet ? 
+-----------------------------------------------------------
+
+Protocole de dépôt
+
+Vous devez rendre : 
+
+* votre rapport au format pdf,
+* vos fichiers de code,
+* vos tests
+
+rassemblés dans une archive tar gzippée identifiée comme
+votre_prenom_votre_nom.tgz.
+La commande devrait ressembler à :
+tar cvfz randolph_carter.tgz rapport.pdf fichiers.ml
+autres_truc_eventuels… 
+
+Lisez le man et testez le contenu de votre archive. Une
+commande comme par exemple :
+tar tvf randolph_carter.tgz
+doit lister les fichiers et donner leur taille.
+Une archive qui ne contient pas les fichiers demandés ne
+sera pas excusable. Une archive qui n'est pas au bon format
+ne sera pas corrigée. 
+
+Procédure de dépôt
+Vous devez enregistrer votre archive tar dans le dépôt
+dédié au cours PRFO23 (prfo23-projet-2023) en vous
+connectant à https://exam.ensiie.fr. Ce dépôt sera ouvert
+jusqu'au 10 janvier inclus. 
+
+-----------------------------------------------------------
+
+Contexte
+
+Le but de ce projet est de maximiser le flot de café entre
+le bar de l'ENSIIE (considéré idéalement comme une source
+infinie de café) et le bureau de M. Forest (considéré
+effectivement comme un puits infini de café).
+
+Le monde moderne de l'enseignement en école d'ingénieurs
+nécessite de maximiser ce flot pour des raisons évidentes.
+Votre projet se développera en plusieurs étapes : 
+
+1 Dans un premier temps, étant donnée une représentation
+ adaptée du plan de l'école, vous chercherez les chemins
+ les plus rapides (les plus courts), de la source au puits
+ ; 
+2 Dans un second temps, après avoir pris en compte la
+ capacité des différents couloirs, vous chercherez à
+ trouver un moyen de maximiser le flot possible de café.
+ Votre programme disposera d'un temps limité pour
+ répondre.
+
+Travail à effectuer
+
+Vous devrez produire un programme phase1 et un programme
+phase2. Vous fournirez en plus un Makefile pour générer ces
+deux executables.
+
+Phase 1 :
+
+Dans un premier temps, nous allons nous contenter de
+recenser les différents plus courts chemins (en nombre
+d'arêtes) entre la source et le puits.
+
+Pour cela, votre programme devra prendre en argument un nom
+de fichier dans lequel sera codé le nom de la source, du
+puits et les différents chemins entre différents points du
+bâtiment (cf format d'entrée). Il devra calculer puis
+retourner tous les chemins les plus courts entre la source
+et le puits selon le bon format de sortie (cf format de
+sortie).
+
+format d'entrée :
+
+Les fichiers d'entrées seront au format suivant : 
+
+1 une première ligne contenant un mot (suite de caractères
+ alpha numériques et de "_") désignant la source,
+2 une deuxième ligne contenant un mot désignant le puits,
+3 une troisième ligne contenant un entier n désignant le
+ nombre de couloirs,
+4 n lignes contenant chacune deux mots désignant
+ respectivement le point de départ et le point d'arrivée
+ pour un couloir. Ces couloirs seront considérés comme à
+ sens unique. 
+
+Vous trouverez ici un exemple très minimal de fichier
+d'entrées pour la phase 1. 
+
+format de sortie :
+
+Pour chaque plus court chemin entre la source et le puits :
+une ligne contenant les noms des sommets de ce chemin,
+séparés par des espaces.
+
+L'ordre entre les differents chemins n'est pas spécifié et
+n'a pas d'importance.
+
+Vous trouverez ici un exemple de sortie correspondant au
+fichier d'exemple d'entrées 
+
+Phase 2:
+
+Nous allons maintenant nous interesser à l'obtention d'un
+flot maximal. Pour cela, nous allons devoir doter nos
+couloirs d'une capacité maximale (les couloirs de l'école
+ne pouvant pas laisser passer plus d'un certain nombre
+d'étudiants en parallèle). 
+
+Il existe de nombreux algorithme pour résoudre ce problème.
+Il vous est très fortement conseillé d'utiliser
+l'algorithme de Dinic. 
+
+format d'entrée :
+
+Les fichiers d'entrées seront au format suivant : 
+
+1 une première ligne contenant un mot (suite de caractères
+ alpha numériques et de "_") désignant la source,
+2 une deuxième ligne contenant un mot désignant le puits,
+3 une troisième ligne contenant un entier n désignant le
+ nombre de couloirs,
+4 n lignes contenant chacune deux mots et un entier
+ désignant respectivement le point de départ, le point
+ d'arrivée et la capacité pour un couloir (un entier). Ces
+ couloirs seront considérés comme à sens unique. 
+
+Vous trouverez ici un exemple très minimal de fichier
+d'entrées pour la phase 2. 
+
+format de sortie :
+
+1 une première ligne contenant le débit maximal entre la
+ source et le puits,
+2 une deuxième ligne contenant un entier k désignant le
+ nombre de couloirs utilisés dans le flot maximum trouvé,
+3 k lignes contenant chacune deux mots et un entier
+ désignant respectivement un point de départ et un point
+ d'arrivée et la capacité utilisée sur ce chemin
+ élémentaire. 
+
+Vous trouverez ici un exemple de sortie correspondant au
+fichier d'exemple d'entrées 
+
+Cadeau(x?)
+
+analyse.ml
+analyse.mli
